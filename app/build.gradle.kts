@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
+    alias(libs.plugins.hilt.android)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -59,4 +62,14 @@ dependencies {
     implementation(libs.androidx.activity.compose.v180)
 
     implementation(libs.coil.compose)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.material)
+}
+
+kapt {
+    correctErrorTypes = true
 }
