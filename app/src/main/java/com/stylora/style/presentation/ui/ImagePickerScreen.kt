@@ -9,8 +9,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -31,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,7 +43,10 @@ import com.stylora.style.domain.model.GiveFeedBackRequestModel
 import com.stylora.style.presentation.viewmodel.FeedbackViewModel
 
 @Composable
-fun ImagePickerScreen(modifier: Modifier) {
+fun ImagePickerScreen(
+    modifier: Modifier,
+    navigateToHistory: () -> Unit
+) {
     val viewModel: FeedbackViewModel = hiltViewModel()
     var singleImageUri by remember { mutableStateOf<Uri?>(null) }
     var showRemoveImageDialog by remember { mutableStateOf(false) }
@@ -71,6 +77,15 @@ fun ImagePickerScreen(modifier: Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.padding(20.dp))
+
+        Row(modifier = Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.Start) {
+            Image(
+                painter = painterResource(R.drawable.history),
+                contentDescription = "history",
+                modifier = Modifier.clickable {
+                    navigateToHistory()
+                })
+        }
 
         DropdownTextField(
             feedbackTypeItems,
@@ -151,7 +166,7 @@ fun ImagePickerScreen(modifier: Modifier) {
                     )
 
                     Text(
-                        text = it.message,
+                        text = it.first().message,
                         color = colorResource(R.color.black),
                         fontSize = 12.sp
                     )
@@ -195,5 +210,4 @@ fun ImagePickerScreen(modifier: Modifier) {
             )
         }
     }
-//}
 }

@@ -9,6 +9,7 @@ import com.stylora.style.data.remote.FeedbackRemoteDataSource
 import com.stylora.style.data.remote.FeedbackRemoteDataSourceImpl
 import com.stylora.style.data.service.FeedbackApi
 import com.stylora.style.domain.repository.FeedbackRepository
+import com.stylora.style.domain.usecase.GetFeedbacksUseCase
 import com.stylora.style.domain.usecase.GiveFeedbackUseCase
 import dagger.Module
 import dagger.Provides
@@ -62,7 +63,13 @@ object StyloraModule {
 
     @Provides
     @Singleton
-    fun provideGetFeedbackListUseCase(repository: FeedbackRepository): GiveFeedbackUseCase {
+    fun provideGiveFeedbackUseCase(repository: FeedbackRepository): GiveFeedbackUseCase {
         return GiveFeedbackUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetFeedbacksUseCase(repository: FeedbackRepository): GetFeedbacksUseCase {
+        return GetFeedbacksUseCase(repository)
     }
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.stylora.style.domain.model.FeedbackResponseState
 import com.stylora.style.domain.model.GiveFeedBackRequestModel
 import com.stylora.style.domain.model.StyloraResponse
+import com.stylora.style.domain.usecase.GetFeedbacksUseCase
 import com.stylora.style.domain.usecase.GiveFeedbackUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,11 +16,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FeedbackViewModel @Inject constructor(private val feedbackUseCase: GiveFeedbackUseCase) :
+class FeedbackViewModel @Inject constructor(
+    private val feedbackUseCase: GiveFeedbackUseCase,
+    private val getFeedbacksUseCase: GetFeedbacksUseCase
+) :
     ViewModel() {
 
     private val _state = MutableStateFlow(FeedbackResponseState())
     val state: StateFlow<FeedbackResponseState> = _state
+
+    private val _historyState = MutableStateFlow(FeedbackResponseState())
+    val historyState: StateFlow<FeedbackResponseState> = _historyState
 
 
     fun giveFeedback(feedBackRequestModel: GiveFeedBackRequestModel) {
@@ -39,7 +46,7 @@ class FeedbackViewModel @Inject constructor(private val feedbackUseCase: GiveFee
                             it.copy(
                                 isLoading = false,
                                 error = null,
-                                feedBackResponseModel = response.responseModel
+                                feedBackResponseModel = listOf(response.responseModel)
                             )
                         }
 
@@ -53,7 +60,39 @@ class FeedbackViewModel @Inject constructor(private val feedbackUseCase: GiveFee
                         }
 
                 }
+            }
+        }
+    }
 
+    fun getFeedbackHistory() {
+        viewModelScope.launch {
+            getFeedbacksUseCase.invoke().collectLatest { response ->
+                when (response) {
+                    is StyloraResponse.Loading -> _historyState.update {
+                        it.copy(
+                            isLoading = true,
+                            error = null
+                        )
+                    }
+
+
+                    is StyloraResponse.Success ->
+                        _historyState.update {
+                            it.copy(
+                                isLoading = false,
+                                error = null,
+                                feedBackResponseModel = response.responseModel
+                            )
+                        }
+
+                    is StyloraResponse.Error ->
+                        _historyState.update {
+                            it.copy(
+                                isLoading = false,
+                                error = response.message
+                            )
+                        }
+                }
             }
         }
     }

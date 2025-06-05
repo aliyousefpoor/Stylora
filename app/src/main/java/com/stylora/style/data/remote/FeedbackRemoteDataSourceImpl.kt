@@ -47,6 +47,23 @@ class FeedbackRemoteDataSourceImpl @Inject constructor(
             }
         }
 
+    override suspend fun getFeedbacks(): Flow<StyloraResponse<List<FeedbackResponseModel>>> =
+        channelFlow {
+            withContext(Dispatchers.IO) {
+                val deviceID =
+                    Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+                val response = service.getUserFeedbacks(deviceID)
+
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        trySend(StyloraResponse.Success(it))
+                    }
+                } else {
+                    trySend(StyloraResponse.Error(response.errorBody()?.string() ?: ""))
+                }
+            }
+        }
+
     private fun prepareImageFilePart(uri: Uri, context: Context): MultipartBody.Part {
         val file = File(getRealPathFromUri(context, uri))
 

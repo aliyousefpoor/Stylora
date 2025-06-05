@@ -13,4 +13,8 @@ class FeedbackRepositoryImpl @Inject constructor(private val dataSource: Feedbac
     override suspend fun giveFeedback(giveFeedBackRequestModel: GiveFeedBackRequestModel): Flow<StyloraResponse<FeedbackResponseModel>> {
         return dataSource.giveFeedback(giveFeedBackRequestModel)
     }
+
+    override suspend fun getFeedbacks(): Flow<StyloraResponse<List<FeedbackResponseModel>>> {
+        return dataSource.getFeedbacks()
+    }
 }

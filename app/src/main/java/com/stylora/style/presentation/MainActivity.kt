@@ -4,11 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHost
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.stylora.style.presentation.ui.FeedbackHistoryScreen
 import com.stylora.style.presentation.ui.ImagePickerScreen
 import com.stylora.style.ui.theme.StyloraTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,24 +23,27 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             StyloraTheme {
-                ImagePickerScreen(Modifier.fillMaxSize())
+                StyloraApp()
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun StyloraApp() {
+    val navController: NavHostController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = "/give_feedback"
+    ) {
+        composable("/give_feedback") {
+            ImagePickerScreen(modifier = Modifier, navigateToHistory = {
+                navController.navigate("/feedback_history")
+            })
+        }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    StyloraTheme {
-        Greeting("Android")
+        composable("/feedback_history") {
+            FeedbackHistoryScreen()
+        }
     }
 }

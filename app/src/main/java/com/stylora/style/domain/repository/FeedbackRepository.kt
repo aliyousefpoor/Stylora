@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface FeedbackRepository {
     suspend fun giveFeedback(giveFeedBackRequestModel: GiveFeedBackRequestModel): Flow<StyloraResponse<FeedbackResponseModel>>
+    suspend fun getFeedbacks(): Flow<StyloraResponse<List<FeedbackResponseModel>>>
 }
