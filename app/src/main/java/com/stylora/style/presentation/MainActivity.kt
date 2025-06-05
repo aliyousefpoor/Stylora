@@ -6,13 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.stylora.style.presentation.ui.FeedbackHistoryScreen
-import com.stylora.style.presentation.ui.ImagePickerScreen
+import com.stylora.style.presentation.ui.GiveFeedbackScreen
 import com.stylora.style.ui.theme.StyloraTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,7 +36,7 @@ fun StyloraApp() {
         startDestination = "/give_feedback"
     ) {
         composable("/give_feedback") {
-            ImagePickerScreen(modifier = Modifier, navigateToHistory = {
+            GiveFeedbackScreen(modifier = Modifier, navigateToHistory = {
                 navController.navigate("/feedback_history")
             })
         }

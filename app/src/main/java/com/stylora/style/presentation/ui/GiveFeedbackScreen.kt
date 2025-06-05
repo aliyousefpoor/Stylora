@@ -43,7 +43,7 @@ import com.stylora.style.domain.model.GiveFeedBackRequestModel
 import com.stylora.style.presentation.viewmodel.FeedbackViewModel
 
 @Composable
-fun ImagePickerScreen(
+fun GiveFeedbackScreen(
     modifier: Modifier,
     navigateToHistory: () -> Unit
 ) {
