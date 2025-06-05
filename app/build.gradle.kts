@@ -60,6 +60,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.androidx.activity.compose.v180)
+    implementation(libs.androidx.constraintlayout.compose)
 
     implementation(libs.coil.compose)
 
@@ -68,6 +69,7 @@ dependencies {
     kapt(libs.hilt.compiler)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.material)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // Retrofit
     implementation(libs.retrofit)

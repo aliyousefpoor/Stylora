@@ -1,26 +1,26 @@
-package com.stylora.style
+package com.stylora.style.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.stylora.style.presentation.ui.ImagePickerScreen
 import com.stylora.style.ui.theme.StyloraTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             StyloraTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    ImagePickerScreen()
-                }
+                ImagePickerScreen(Modifier.fillMaxSize())
             }
         }
     }
