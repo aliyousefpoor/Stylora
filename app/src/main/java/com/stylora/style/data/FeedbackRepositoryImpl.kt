@@ -1,0 +1,13 @@
+package com.stylora.style.data
+
+import com.stylora.style.domain.model.FeedbackResponseModel
+import com.stylora.style.domain.model.GiveFeedBackRequestModel
+import com.stylora.style.domain.repository.FeedbackRepository
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+
+class FeedbackRepositoryImpl @Inject constructor():FeedbackRepository {
+    override suspend fun giveFeedback(giveFeedBackRequestModel: GiveFeedBackRequestModel): Flow<FeedbackResponseModel> {
+        TODO("Not yet implemented")
+    }
+}

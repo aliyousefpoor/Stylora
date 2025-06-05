@@ -68,6 +68,16 @@ dependencies {
     kapt(libs.hilt.compiler)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.material)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.kotlin.coroutines.adapter)
+    implementation(libs.converter.gson)
+
+    // OkHttp
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
 }
 
 kapt {
